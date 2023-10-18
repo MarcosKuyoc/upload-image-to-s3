@@ -19,10 +19,10 @@ provider:
 
 functions:
   signedURL:
-    handler: src/handler.signedUrl
+    handler: src/aplication/signedUrl.handler
     package:
       patterns:
-        - 'src/handler.ts'
+        - 'src/aplication/signedUrl.ts'
     events:
       - http:
           path: signedURL
@@ -31,6 +31,18 @@ functions:
             parameters:
               querystrings:
                 filename: true
+  thumbnailGenerator:
+    handler: src/aplication/thumbnailGenerator.handler
+    package:
+      patterns:
+        - 'src/aplication/thumbnailGenerator.ts'
+    events:
+      - s3:
+          bucket: bucket-serverless-mkuyoc-001
+          event: s3:ObjectCreated:*
+          existing: true
+          rules:
+            - prefix: upload/
 
 plugins:
   - serverless-plugin-typescript

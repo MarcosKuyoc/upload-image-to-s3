@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import * as AWS from 'aws-sdk';
 const s3 = new AWS.S3({signatureVersion: 'v4'});
 
-export const signedUrl = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
     const filename = event.queryStringParameters!.filename;
     const signedUrl = await s3.getSignedUrlPromise('putObject', {
