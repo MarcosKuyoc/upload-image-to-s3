@@ -1,6 +1,6 @@
-# Serverless Framework: Node Con Typescript y HTTP API En AWS
+# Serverless Framework: Node Con Typescript y S3Event
 
-Se crea un servicio para subir una imagen a S3 usando serverless la imagen resultante sera una url firmada
+Se crea un servicio para crear una URL firmada que puedar subir una imagen a S3 usando node y serverless, tambien se crea una funcion que ejecuta un evento para redimenciona images una vez que sean cargadas al bucket.
 
 
 ## Setup
@@ -37,11 +37,10 @@ npm i sharp --arch=x64 --platform=linux
 npm i --production --arch=x64 --platform=linux
 ```
 
-# Crear una lamnda Layer
+# Crear una lambda Layer
 ```shell
 npm i --production --arch=x64 --platform=linux
 mkdir nodejs
 mv node_modules nodejs
-#apt update -y && apt install zip -y
 zip -r nodejs.zip nodejs/
 ```
