@@ -34,4 +34,14 @@ curl https://localhost:3000/
 # Observaciones par Mac M1 y la libreria sharp
 ```shell
 npm i sharp --arch=x64 --platform=linux
+npm i --production --arch=x64 --platform=linux
+```
+
+# Crear una lamnda Layer
+```shell
+npm i --production --arch=x64 --platform=linux
+mkdir nodejs
+mv node_modules nodejs
+#apt update -y && apt install zip -y
+zip -r nodejs.zip nodejs/
 ```
