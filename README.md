@@ -30,3 +30,8 @@ sls invoke local --function hello
 ```
 curl https://localhost:3000/
 ```
+
+# Observaciones par Mac M1 y la libreria sharp
+```shell
+npm i sharp --arch=x64 --platform=linux
+```
