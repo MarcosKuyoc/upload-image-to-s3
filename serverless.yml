@@ -1,0 +1,66 @@
+service: updalod-image-to-s3
+frameworkVersion: '3'
+
+custom:
+  serverlessPluginTypescript:
+    tsConfigFileLocation: './tsconfig.build.json'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 's3:*'
+          Resource: arn:aws:s3:::bucket-serverless-mkuyoc-001/*
+  environment:
+    BUCKET: bucket-serverless-mkuyoc-001
+
+functions:
+  signedURL:
+    handler: src/handler.signedUrl
+    package:
+      patterns:
+        - 'src/handler.ts'
+    events:
+      - http:
+          path: signedURL
+          method: GET
+          request:
+            parameters:
+              querystrings:
+                filename: true
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+package:
+  individually: true
+  patterns:
+    - "!*/**"
+
+resources:
+  Resources:
+    S3Bucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        AccessControl: PublicRead
+        BucketName: bucket-serverless-mkuyoc-001
+    SampleBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref S3Bucket
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Action:
+                - 's3:GetObject'
+              Effect: Allow
+              Resource: !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref S3Bucket
+                  - /*
+              Principal: '*'
